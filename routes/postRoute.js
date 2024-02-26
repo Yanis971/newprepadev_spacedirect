@@ -1,4 +1,4 @@
-// const express = require('express');
+const express = require('express');
 const router = express.Router();
 //TODO: creer ensureAuthenticator dans Midlewares
 const { ensureAuthenticator } = require('../middlewares/authMiddleware');
