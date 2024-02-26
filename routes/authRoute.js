@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../controller/authController');
 
-// Page de formulaire de connexion 
+//Page formulaire de connexion
 router.get('/login', (req, res) => {
     res.render('login');
 })
 
-// Page de formulaire de création de compte 
-router.get('/register', (req, res) => {
-    res.render('register');
-})
+//Page formulaire de création de compte
+router.get('/register', authController.showRegistrationForm);
 
 module.exports = router;
