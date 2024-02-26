@@ -3,7 +3,7 @@ const app = express();
 
 // route d'acceuil
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Hello World ');
 })
 
 // ecoute du serveur sur le port 3000
