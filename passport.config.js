@@ -1,10 +1,10 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../model/userScheme');
+const User = require('./model/userScheme');
 
-passeport.usernew(new LocalStrategy(
+passport.use(new LocalStrategy(
     { usernameField: 'email' },
-    async (email, passport, done) => {
+    async (email, password, done) => {
         try {
             const user = await User.findOne({ email: email });
 
@@ -19,6 +19,7 @@ passeport.usernew(new LocalStrategy(
             } else {
                 return done(null, false, { message: 'email et/ou mot de passe incorrect' });
             }
+
         } catch (error) {
             return done(error);
         }
@@ -29,7 +30,7 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passeport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id);
         done(null, user);

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const flash = require('express-flash');
 
 // initialisation de l'application
 const app = express();
@@ -30,11 +31,15 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+// configuration des messages flash
+app.use(flash());
+
+
 //configuration des routes 
 const authRoutes = require("./routes/authRoute");
 const postRoute = require("./routes/postRoute");
 const userRoute = require("./routes/userRoute");
-const flash = require('express-flash');
+
 
 app.use('/', authRoutes);
 app.use('/posts', postRoute);
@@ -50,5 +55,3 @@ app.listen(PORT, () => {
     console.log('Serveur is running on port http://localhost:$(PORT)');
 })
 
-// configuration des messages flash
-app.use(flash());
