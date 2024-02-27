@@ -41,3 +41,13 @@ exports.registerUser = async (req, res) => {
     }
 
 }
+
+// affiche le formulaire de connexion
+exports.showRegistrationForm = (req, res) => {
+    res.render('login');
+}
+
+// connexion a l'utilisateur
+exports.loginUser = (req, res) => {
+
+}
