@@ -56,3 +56,5 @@ app.listen(PORT, () => {
     console.log('Serveur is running on port http://localhost:$(PORT)');
 })
 
+// configurations du dossier public
+app.use(express.static('public'));
