@@ -68,3 +68,63 @@ exports.showEditPost = async (req, res) => {
         res.render('post/edit', { error: 'Une erreur est survenue, veuillez réessayer.' });
     }
 };
+
+// methode qui met a jour un post
+exports.editPost = async (req, res) => {
+    try {
+        const { title, content } = req.body;
+
+        // on recupere l'id du post
+        const postId = req.params.id;
+
+        const post = await Post.findById(postId);
+
+        // on verifie si l'user est l'auteur du post
+        if (post.author.equals(req.user._id)) {
+            // on met a jour le post
+            post.title = title;
+            post.content = content;
+            post.updated_at = new Date();
+
+            //on sauvegarde le post
+            await post.save();
+
+            // on redirige sur l'accueil
+            res.redirect('/');
+        } else {
+            // on redirige sur l'accueil
+            res.redirect('/');
+        }
+
+    } catch (error) {
+        // on retourne le formulaire avec un message d'erreur
+        res.render('post/add', { error: 'Une erreur est survenue, veuillez réessayer.' })
+    }
+};
+
+// methode qui supprime le post
+exports.deletePost = async (req, res) => {
+    try {
+        // on recupere l'id du post
+        const postId = req.params.id;
+        console.log(postId)
+        // on recupere le post a son a id
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).send('Arrete de jouer avec les urls');
+        }
+        // on verifie si l'user est l'auteur du post
+        if (post.author.equals(req.user._id)) {
+            // on suprrime le post
+            // await post.remove();
+            // wait post.deleteOne();
+            await post.deleteOne()
+            res.redirect('/')
+        } else {
+            res.redirect('/')
+        }
+    } catch (error) {
+
+    }
+}
