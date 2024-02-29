@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 
-// Creation des identitées-classes 
-const postScheme = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
     content: {
         type: String,
-        default: Date.now
+        required: true
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     created_at: {
         type: Date,
@@ -16,13 +20,8 @@ const postScheme = new mongoose.Schema({
     },
     updated_at: {
         type: Date,
-        required: true
-    },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        default: Date.now
     }
 });
-// modele qui porte la cle userScheme
-module.exports = mongoose.model('Post', postScheme);
+
+module.exports = mongoose.model('Post', postSchema);
